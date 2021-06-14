@@ -1,0 +1,43 @@
+html {
+  background-color: #8a2be2;
+}
+canvas {
+  margin: auto;
+  padding-left: 0;
+  padding-right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  position: relative;
+  left: 30px;
+}
+div {
+  font-family: "Open Sans Condensed";
+  font-size: 18pt;
+  font-weight: 100;
+  text-align: center;
+  padding-top: 20px;
+}
+td {
+  width: 200px;
+  text-align: center;
+  font-family: "Open Sans Condensed";
+  font-size: 18pt;
+  font-weight: 100;
+  text-align: center;
+}
+table {
+  margin: auto;
+}
+#costheta {
+  color: red;
+}
+#sintheta {
+  color: blue;
+}
+h1 {
+  font-family: "Open Sans Condensed";
+  fonte-weight: 100;
+  font-size: 36pt;
+  text-align: center;
+}

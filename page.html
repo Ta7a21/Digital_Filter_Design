@@ -1,0 +1,23 @@
+<html>
+   <head>
+    <link rel="stylesheet" href="style.css" />
+      <title>View</title>
+    </head>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/highcharts-more.js"></script>
+    <script src="https://code.highcharts.com/modules/draggable-points.js"></script>
+
+    
+    <body onload="draw();">
+        <h1>The Unit Circle Visualized</h1>
+        <div id="container" style="min-width: 300px;height: 500px;">
+        <canvas id="oy" width="460" height="410"></canvas>
+        </div>
+        <div>&theta; = <span id ="theta">45</span>&deg;</div>
+        <div>&theta; = <span id ="thetaRad">0</span>&pi; rad</div>
+        <div id ="cos">cos(&theta;) = <span id ="costheta"></span>&nbsp;</div>
+        <div id ="sin">sin(&theta;) = <span id ="sintheta"></span>&nbsp;</div>
+        <script src="graph.js"></script>
+  </body>
+</html> 
