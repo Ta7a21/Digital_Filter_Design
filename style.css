@@ -9,7 +9,6 @@ canvas {
   margin-right: auto;
   display: block;
   position: relative;
-  left: 30px;
 }
 div {
   font-family: "Open Sans Condensed";
@@ -37,7 +36,7 @@ table {
 }
 h1 {
   font-family: "Open Sans Condensed";
-  fonte-weight: 100;
+  font-weight: 100;
   font-size: 36pt;
   text-align: center;
 }
