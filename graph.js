@@ -1,13 +1,11 @@
 
 //window.onload = function() {draw()}
-var pointSize = 3;
-var canvas,
-  context,
+var pointSize = 3, zeros = [], poles = [], canvas = document.getElementById('oy');
+var context,
   centerX,
   radius,
   centerY;
 function draw() {
-  canvas = document.getElementById('oy');
   var ctx = canvas.getContext('2d');
   radius = 200;
   var startAngle = 0;
@@ -38,28 +36,70 @@ function getPosition(event) {
   var y = event.clientY - rect.top;
 
   if (Math.pow((x - centerX), 2) + Math.pow((y - centerY), 2) <= Math.pow(radius, 2))
-    drawCoordinates(x, y);
+    drawCoordinates(x, y, document.getElementById('zero').checked);
 }
 
-function drawCoordinates(x, y) {
-  var ctx = document.getElementById("oy").getContext("2d");
+function drawCoordinates(x, y, flag) {
+  var ctx = canvas.getContext("2d");
 
 
   ctx.beginPath();
-  ctx.fillStyle = "#ffffff"; // Red color
+  if (flag) {
+    zeros.push([x, y]);
+    ctx.fillStyle = "#ffffff"; // Red color
 
-  ctx.arc(x, y, pointSize, 0, Math.PI * 2, true);
-  ctx.fill();
+    ctx.arc(x, y, pointSize, 0, Math.PI * 2, true);
+    ctx.fill();
+  }
+  else {
+    poles.push([x, y]);
+    ctx.moveTo(x - 5, y - 5);
+    ctx.lineTo(x + 5, y + 5);
 
-  // ctx.moveTo(x - 5, y - 5);
-  // ctx.lineTo(x + 5, y + 5);
-
-  // ctx.moveTo(x + 5, y - 5);
-  // ctx.lineTo(x - 5, y + 5);
-  // ctx.strokeStyle = "#ffffff";
-  // ctx.stroke();
+    ctx.moveTo(x + 5, y - 5);
+    ctx.lineTo(x - 5, y + 5);
+    ctx.strokeStyle = "#ffffff";
+    ctx.stroke();
+  }
+  ctx.closePath();
 }
 
+function clearCanvas(toClear) {
+  // console.log('toClear')
+  draw();
+  if (toClear === 'zeros') {
+    for (let i = 0; i < poles.length; i += 1) {
+      var ctx = canvas.getContext("2d");
+      ctx.beginPath();
+      ctx.moveTo(poles[i][0] - 5, poles[i][1] - 5);
+      ctx.lineTo(poles[i][0] + 5, poles[i][1] + 5);
+
+      ctx.moveTo(poles[i][0] + 5, poles[i][1] - 5);
+      ctx.lineTo(poles[i][0] - 5, poles[i][1] + 5);
+      ctx.strokeStyle = "#ffffff";
+      ctx.stroke();
+      ctx.closePath();
+    }
+    zeros = []
+  }
+  else if (toClear === 'poles') {
+
+    for (let i = 0; i < zeros.length; i += 1) {
+      var ctx = canvas.getContext("2d");
+      ctx.beginPath();
+      ctx.fillStyle = "#ffffff"; // Red color
+
+      ctx.arc(zeros[i][0], zeros[i][1], pointSize, 0, Math.PI * 2, true);
+      ctx.fill();
+      ctx.closePath();
+    }
+    poles = []
+  }
+  else {
+    zeros = []
+    poles = []
+  }
+}
 WebFontConfig = {
   google: { families: ['Open+Sans+Condensed:300:latin'] }
 };

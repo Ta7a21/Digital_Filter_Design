@@ -40,3 +40,9 @@ h1 {
   font-size: 36pt;
   text-align: center;
 }
+
+label {
+  padding: 10px;
+  display: block;
+  text-align: center;
+}

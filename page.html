@@ -12,6 +12,17 @@
 
 <body onload="draw();">
   <h1 id="title">The Unit Circle Visualized</h1>
+  <label>
+    <input type="radio" id="zero" name="add" checked="true">Add Zeros
+    <input type="radio" id="pole" name="add">Add Poles
+  </label>
+  <label>
+    <button onclick="clearCanvas('zeros')">Clear Zeros</button>
+    <button onclick="clearCanvas('poles');">Clear Poles</button>
+  </label>
+  <label>
+    <button onclick="clearCanvas('all');">Clear All</button>
+  </label>
   <canvas id="oy" width="460" height="410"></canvas>
   <script src="graph.js"></script>
 </body>
