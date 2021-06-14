@@ -36,7 +36,12 @@ function getPosition(event) {
   var y = event.clientY - rect.top;
 
   if (Math.pow((x - centerX), 2) + Math.pow((y - centerY), 2) <= Math.pow(radius, 2))
-    drawCoordinates(x, y, document.getElementById('zero').checked);
+  {
+    flag = del(x,y);
+    if(!flag)
+    drawCoordinates(x, y, document.getElementById('zero').checked,);
+
+  }
 }
 
 function drawCoordinates(x, y, flag) {
@@ -62,6 +67,83 @@ function drawCoordinates(x, y, flag) {
     ctx.stroke();
   }
   ctx.closePath();
+}
+
+var inRange = function (num, start, end) {
+
+  // If no end number, use start as end
+  if (!end) {
+      end = start;
+      start = 0;
+  }
+
+  return num >= start && num <= end;
+
+};
+
+function del(x,y)
+{
+  var flag = false
+ for (i=0; i<zeros.length; i++)
+ {
+ xmax = zeros[i][0] + 5
+ xmin = zeros[i][0] - 5
+ ymax = zeros[i][1] + 5
+ ymin = zeros[i][1] - 5
+ if(inRange(x,xmin,xmax))
+ {
+  if(inRange(y,ymin,ymax)){
+    zeros.splice(i,1)
+    flag = true
+  
+  }
+}
+}
+
+   for (i=0; i<poles.length; i++)
+ {
+ xmax = poles[i][0] + 5
+ xmin = poles[i][0] - 5
+ ymax = poles[i][1] + 5
+ ymin = poles[i][1] - 5
+ if(inRange(x,xmin,xmax))
+ {
+  if(inRange(y,ymin,ymax)){
+    poles.splice(i,1) 
+    flag = true
+  
+  }
+}
+ }
+ 
+ if(flag){  
+ draw();
+ for (let i = 0; i < poles.length; i += 1)
+  {
+   var ctx = canvas.getContext("2d");
+   ctx.beginPath();
+   ctx.moveTo(poles[i][0] - 5, poles[i][1] - 5);
+   ctx.lineTo(poles[i][0] + 5, poles[i][1] + 5);
+
+   ctx.moveTo(poles[i][0] + 5, poles[i][1] - 5);
+   ctx.lineTo(poles[i][0] - 5, poles[i][1] + 5);
+   ctx.strokeStyle = "#ffffff";
+   ctx.stroke();
+   ctx.closePath();
+  }
+
+for (let i = 0; i < zeros.length; i += 1)
+{
+ var ctx = canvas.getContext("2d");
+ ctx.beginPath();
+ ctx.fillStyle = "#ffffff"; // Red color
+
+ ctx.arc(zeros[i][0], zeros[i][1], pointSize, 0, Math.PI * 2, true);
+ ctx.fill();
+ ctx.closePath();
+} 
+ }
+ return flag
 }
 
 function clearCanvas(toClear) {
