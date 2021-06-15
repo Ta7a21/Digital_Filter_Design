@@ -54,22 +54,19 @@ function getPosition(event) {
 
 function drawCoordinates(x, y, flag) {
   var ctx = canvas.getContext("2d");
-  var xx = x - 230;
-  var yy = 210 - y;
-  xx/=200.0;
-  yy/=200.0;
+
 
 
   ctx.beginPath();
   if (flag) {
-    zeros.push({ xx, yy, isDragging: false });
+    zeros.push({ x, y, isDragging: false });
     ctx.fillStyle = "#ffffff"; // Red color
 
     ctx.arc(x, y, pointSize, 0, Math.PI * 2, true);
     ctx.fill();
   }
   else {
-    poles.push({ xx, yy, isDragging: false });
+    poles.push({ x, y, isDragging: false });
     ctx.moveTo(x - 5, y - 5);
     ctx.lineTo(x + 5, y + 5);
 
@@ -300,9 +297,24 @@ function myMove(e) {
   }
 }
 function freqResponse(){
+  var zerosP = [],polesP = [];
+  for (var i = 0;i<zeros.length;i++){
+    var xx = zeros[i].x - 230;
+    var yy = 210 - zeros[i].y;
+    xx/=200.0;
+    yy/=200.0;
+    zerosP.push([xx,yy])
+  }
+  for (var i = 0;i<poles.length;i++){
+    var xx = poles[i].x - 230;
+    var yy = 210 - poles[i].y;
+    xx/=200.0;
+    yy/=200.0;
+    polesP.push([xx,yy])
+  }
   $.post( "/postmethod", {
-    zeros_data: JSON.stringify(zeros),
-    poles_data: JSON.stringify(poles)
+    zeros_data: JSON.stringify(zerosP),
+    poles_data: JSON.stringify(polesP)
   },
   function(err, req, resp){
     let x = JSON.parse(resp["responseText"])

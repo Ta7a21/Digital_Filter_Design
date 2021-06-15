@@ -18,14 +18,13 @@ def post_javascript_data():
     jsdata1 = request.form["zeros_data"]
     jsdata2 = request.form["poles_data"]
     k  = 0.5
-    z = []
     z = json.loads(jsdata1)
     p = json.loads(jsdata2)
+    print(z)
     for i in range (len(z)):
       z[i] = z[i][0] + 1j*z[i][1]
     for i in range (len(p)):
       p[i] = p[i][0] + 1j*p[i][1]  
-    print(z)
     # z, p, k = signal.butter(10, 100, output='zpk', fs=1000)
     w, h = signal.freqz_zpk(z, p, k, fs=2000)
     # print(len(w))
