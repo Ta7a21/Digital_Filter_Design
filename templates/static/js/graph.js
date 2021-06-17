@@ -9,7 +9,8 @@ var HEIGHT = canvas.height;
 var dragok = false;
 var startX;
 var startY;
-var lineChart = 0;  
+var lineChart = 0;
+var lineChart2 = 0;  
 
 canvas.onmousedown = myDown;
 canvas.onmouseup = myUp;
@@ -317,15 +318,22 @@ function freqResponse(){
     poles_data: JSON.stringify(polesP)
   },
   function(err, req, resp){
-    let x = JSON.parse(resp["responseText"])
+    var x = JSON.parse(resp["responseText"])
     // console.log(x.x)
+    var maxX = Math.max.apply(Math,x.magnitudeX);
     if (lineChart != 0)
       lineChart.destroy();
+    for (var i = 0;i<x.magnitudeX.length;i++){
+      x.magnitudeX[i] = (x.magnitudeX[i]/maxX).toFixed(2);
+      x.magnitudeY[i] = x.magnitudeY[i].toFixed(2);
+      x.angles[i] = x.angles[i].toFixed(2);
+    }
+      
     const chart  = document.getElementById("chart")
     lineChart  = new Chart(chart,{
       type: 'line',
       data:  {
-        labels : x.x,
+        labels : x.magnitudeX,
         datasets: [
           {
             label: "My First dataset",
@@ -342,7 +350,38 @@ function freqResponse(){
             pointBorderWidth: 1,
             pointHoverRadius: 5,
             pointHitRadius: 10,
-            data: x.y,
+            data: x.magnitudeY,
+            // borderColor: Utils.CHART_COLORS.red,
+            // backgroundColor: Utils.transparentize(Utils.CHART_COLORS.red, 0.5),
+          },
+        ]
+      }
+    })
+    if (lineChart2 != 0)
+      lineChart2.destroy();
+
+    const chart2  = document.getElementById("chart2")
+    lineChart2  = new Chart(chart2,{
+      type: 'line',
+      data:  {
+        labels : x.magnitudeX,
+        datasets: [
+          {
+            label: "My First dataset",
+            fill: false,
+            // lineTension: 0.1,
+            backgroundColor: "rgba(75, 192, 192, 0.4)",
+            borderColor: "rgba(75, 192, 192, 1)",
+            borderCapStyle: 'butt',
+            borderDash: [],
+            borderDashOffset: 0.0,
+            borderJoinStyle: 'miter',
+            pointBorderColor: "rgba(75,192,192,1)",
+            pointBackgroundColor: "#fff",
+            pointBorderWidth: 1,
+            pointHoverRadius: 5,
+            pointHitRadius: 10,
+            data: x.angles,
             // borderColor: Utils.CHART_COLORS.red,
             // backgroundColor: Utils.transparentize(Utils.CHART_COLORS.red, 0.5),
           },
