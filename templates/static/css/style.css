@@ -1,5 +1,5 @@
 html {
-  background-color: white;
+  background-color: #C6AEC7;
 }
 canvas {
   margin: auto;
@@ -28,12 +28,12 @@ td {
 table {
   margin: auto;
 }
-#costheta {
+/* #costheta {
   color: red;
 }
 #sintheta {
   color: blue;
-}
+} */
 h1 {
   font-family: "Open Sans Condensed";
   font-weight: 100;
@@ -45,4 +45,18 @@ label {
   padding: 10px;
   display: block;
   text-align: center;
+}
+#response {
+  display: block;
+  /* vertical-align: top; */
+  margin-left: 1000px;
+  /* float:left; */
+  /* margin-bottom: -50px; */
+}
+
+
+
+#oyy {
+  display: block;
+  /* margin-left:10px; */
 }

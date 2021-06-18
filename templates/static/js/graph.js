@@ -10,7 +10,9 @@ var dragok = false;
 var startX;
 var startY;
 var lineChart = 0;
-var lineChart2 = 0;  
+var lineChart2 = 0;
+var lineChart3 = 0;
+var lambda = 0;
 
 canvas.onmousedown = myDown;
 canvas.onmouseup = myUp;
@@ -336,7 +338,7 @@ function freqResponse(){
         labels : x.magnitudeX,
         datasets: [
           {
-            label: "My First dataset",
+            label: "Magnitude dataset",
             fill: false,
             // lineTension: 0.1,
             backgroundColor: "rgba(75, 192, 192, 0.4)",
@@ -350,7 +352,7 @@ function freqResponse(){
             pointBorderWidth: 1,
             pointHoverRadius: 5,
             pointHitRadius: 10,
-            data: x.magnitudeY,
+            data: x.angles,
             // borderColor: Utils.CHART_COLORS.red,
             // backgroundColor: Utils.transparentize(Utils.CHART_COLORS.red, 0.5),
           },
@@ -367,21 +369,53 @@ function freqResponse(){
         labels : x.magnitudeX,
         datasets: [
           {
-            label: "My First dataset",
+            label: "Phase response",
             fill: false,
             // lineTension: 0.1,
-            backgroundColor: "rgba(75, 192, 192, 0.4)",
-            borderColor: "rgba(75, 192, 192, 1)",
+            backgroundColor: "rgba(255,140,0,0.4)",
+            borderColor: "rgba(255,140,0,0.7)",
             borderCapStyle: 'butt',
             borderDash: [],
             borderDashOffset: 0.0,
             borderJoinStyle: 'miter',
-            pointBorderColor: "rgba(75,192,192,1)",
+            pointBorderColor: "rgba(255,140,0,1)",
             pointBackgroundColor: "#fff",
             pointBorderWidth: 1,
             pointHoverRadius: 5,
             pointHitRadius: 10,
-            data: x.angles,
+            data: x.angles2,
+            // borderColor: Utils.CHART_COLORS.red,
+            // backgroundColor: Utils.transparentize(Utils.CHART_COLORS.red, 0.5),
+          },
+        ]
+      }
+    })
+
+    if (lineChart3 != 0)
+      lineChart3.destroy();
+
+    const chart3  = document.getElementById("chart3")
+    lineChart3  = new Chart(chart3,{
+      type: 'line',
+      data:  {
+        labels : x.magnitudeX,
+        datasets: [
+          {
+            label: "All-Pass Filters phase response",
+            fill: false,
+            // lineTension: 0.1,
+            backgroundColor: "rgba(34,139,34,0.4)",
+            borderColor: "rgba(34,139,34,0.7)",
+            borderCapStyle: 'butt',
+            borderDash: [],
+            borderDashOffset: 0.0,
+            borderJoinStyle: 'bevel',
+            pointBorderColor: "rgba(34,139,34,1)",
+            pointBackgroundColor: "#fff",
+            pointBorderWidth: 1,
+            pointHoverRadius: 5,
+            pointHitRadius: 10,
+            data: x.angles3,
             // borderColor: Utils.CHART_COLORS.red,
             // backgroundColor: Utils.transparentize(Utils.CHART_COLORS.red, 0.5),
           },

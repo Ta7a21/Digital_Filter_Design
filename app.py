@@ -28,29 +28,30 @@ def post_javascript_data():
     p = json.loads(jsdata2)
     for i in range(len(z)):
         # comp = z[i][0] - 1j*z[i][1]
-        z[i] = round(z[i][0],2) + 1j*round(z[i][1],2)
+        z[i] = round(z[i][0], 2) + 1j*round(z[i][1], 2)
         # z.append(comp)
     for i in range(len(p)):
         # comp = p[i][0] - 1j*p[i][1]
-        p[i] = round(p[i][0],2) + 1j*round(p[i][1],2)
+        p[i] = round(p[i][0], 2) + 1j*round(p[i][1], 2)
         # p.append(comp)
-    print(z)
-    print(p)
     w, h = signal.freqz_zpk(z, p, k, fs=1000)
-    w2, h2 = signal.freqz([0.7, 1.0], [1.0, 0.7])
+    w2, h2 = signal.freqz([-0.995, 1.0], [1.0,-0.995])
     # print(len(w))
     angles = np.unwrap(np.angle(h))
     angles2 = np.unwrap(np.angle(h2))
-    angles += angles2
     h = 20*np.log10(np.abs(h))
     w = w.tolist()
     h = h.tolist()
+    angles3 = np.add(angles , angles2)
     angles = angles.tolist()
-    params = {"magnitudeX": w, "magnitudeY": h,"angles":angles}
+    angles2 = angles2.tolist()
+    angles3 = angles3.tolist()
+
+    params = {"magnitudeX": w, "magnitudeY": h, "angles": angles,
+              "angles2": angles2, "angles3": angles3}
     # param = {"poles": p,"zeros":z}
     # print(params)
     return jsonify(params)
-
 
 
 if __name__ == '__main__':
