@@ -1,38 +1,43 @@
 <html>
-  <head>
-    <link rel="stylesheet" href="/static/css/style.css" />
-    <title>View</title>
-  </head>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-  <script src="https://code.highcharts.com/highcharts.js"></script>
-  <script src="https://code.highcharts.com/highcharts-more.js"></script>
-  <script src="https://code.highcharts.com/modules/draggable-points.js"></script>
+<head>
+  <link rel="stylesheet" href="/static/css/style.css" />
+  <title>View</title>
+</head>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-  <body onload="draw(),freqResponse();">
-    <h1 id="title">The Unit Circle Visualized</h1>
-    <label>
-      <input type="radio" id="zero" name="add" checked="true" />Add Zeros
-      <input type="radio" id="pole" name="add" />Add Poles
-    </label>
-    <label>
-      <button onclick="clearCanvas('zeros')">Clear Zeros</button>
-      <button onclick="clearCanvas('poles');">Clear Poles</button>
-    </label>
-    <label>
-      <button onclick="clearCanvas('all');">Clear All</button>
-    </label>
-    <div id = "oyy">
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/highcharts-more.js"></script>
+<script src="https://code.highcharts.com/modules/draggable-points.js"></script>
+
+<body onload="draw();">
+  <h1 id="title">The Unit Circle Visualized</h1>
+  <label>
+    <input type="radio" id="zero" name="add" checked="true" />Add Zeros
+    <input type="radio" id="pole" name="add" />Add Poles
+  </label>
+  <!-- <label> -->
+  <input type="checkbox" id="conj">
+  Draw Conjugate
+  <!-- </label> -->
+  <label>
+    <button onclick="clearCanvas('zeros')">Clear Zeros</button>
+    <button onclick="clearCanvas('poles');">Clear Poles</button>
+    <button onclick="clearCanvas('all');">Clear All</button>
+  </label>
+  <div class="row">
+    <div class="column">
       <canvas id="oy" width="460" height="410"></canvas>
-
-      <div id="response">
-        <canvas id="chart" height="400" width="500"></canvas>
-        <canvas id="chart2" height="400" width="500"></canvas>
-      </div>
     </div>
-      <canvas id="chart3" height="800" width="1000"></canvas>
+    <div class="column">
+      <canvas id="chart" height="400" width="500"></canvas>
+      <canvas id="chart2" height="400" width="500"></canvas>
+    </div>
+  </div>
+  <canvas id="chart3" height="400" width="500"></canvas>
 
-    <script src="/static/js/graph.js"></script>
-  </body>
+  <script src="/static/js/graph.js"></script>
+</body>
+
 </html>

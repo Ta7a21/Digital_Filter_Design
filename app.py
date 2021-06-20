@@ -26,7 +26,8 @@ def post_javascript_data():
     for i in range(len(p)):
         p[i] = round(p[i][0], 2) + 1j*round(p[i][1], 2)
     w, h = signal.freqz_zpk(z, p, k)
-    w2, h2 = signal.freqz([-0.1 , 1.0], [1.0,-0.1 ])
+    w = np.round(w,2)
+    _, h2 = signal.freqz([-0.1 , 1.0], [1.0,-0.1 ])
     angles = np.unwrap(np.angle(h))
     angles2 = np.unwrap(np.angle(h2))
     h = 20*np.log10(np.abs(h))
