@@ -1,62 +1,32 @@
 html {
-  background-color: #C6AEC7;
-}
-canvas {
-  margin: auto;
-  padding-left: 0;
-  padding-right: 0;
-  margin-left: auto;
-  margin-right: auto;
-  display: block;
-  position: relative;
-}
-div {
+  background-color:white;
   font-family: "Open Sans Condensed";
   font-size: 18pt;
   font-weight: 100;
   text-align: center;
   padding-top: 20px;
 }
-td {
-  width: 200px;
-  text-align: center;
-  font-family: "Open Sans Condensed";
-  font-size: 18pt;
-  font-weight: 100;
-  text-align: center;
-}
-table {
-  margin: auto;
-}
-/* #costheta {
-  color: red;
-}
-#sintheta {
-  color: blue;
-} */
-h1 {
-  font-family: "Open Sans Condensed";
-  font-weight: 100;
-  font-size: 36pt;
-  text-align: center;
+canvas {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 label {
-  padding: 10px;
+  padding: 5px;
   display: block;
   text-align: center;
 }
-#response {
-  display: block;
-  /* vertical-align: top; */
-  margin-left: 1000px;
-  /* float:left; */
-  /* margin-bottom: -50px; */
+
+.column {
+  float: left;
+  padding-left: 150px;
+  padding-right: 10px;
 }
 
-
-
-#oyy {
-  display: block;
-  /* margin-left:10px; */
+/* Clearfix (clear floats) */
+.row::after {
+  content: "";
+  clear: both;
+  display: table;
 }
