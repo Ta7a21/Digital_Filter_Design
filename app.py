@@ -18,25 +18,15 @@ def main():
 def post_javascript_data():
     jsdata1 = request.form["zeros_data"]
     jsdata2 = request.form["poles_data"]
-    k = 0.5
-    # z, p, k = signal.butter(4, 160, output='zpk', fs=1500)
-    # print(z)
-    # print(p)
-    # z = [(-0.4175-0.55921875j), (-0.4175+0.55921875j)]
-    # p = [(-0.4175-0.55921875j), (-0.4175+0.55921875j)]
+    k = 1
     z = json.loads(jsdata1)
     p = json.loads(jsdata2)
     for i in range(len(z)):
-        # comp = z[i][0] - 1j*z[i][1]
         z[i] = round(z[i][0], 2) + 1j*round(z[i][1], 2)
-        # z.append(comp)
     for i in range(len(p)):
-        # comp = p[i][0] - 1j*p[i][1]
         p[i] = round(p[i][0], 2) + 1j*round(p[i][1], 2)
-        # p.append(comp)
-    w, h = signal.freqz_zpk(z, p, k, fs=1000)
-    w2, h2 = signal.freqz([-0.995, 1.0], [1.0,-0.995])
-    # print(len(w))
+    w, h = signal.freqz_zpk(z, p, k)
+    w2, h2 = signal.freqz([-0.1 , 1.0], [1.0,-0.1 ])
     angles = np.unwrap(np.angle(h))
     angles2 = np.unwrap(np.angle(h2))
     h = 20*np.log10(np.abs(h))
@@ -46,11 +36,8 @@ def post_javascript_data():
     angles = angles.tolist()
     angles2 = angles2.tolist()
     angles3 = angles3.tolist()
-
     params = {"magnitudeX": w, "magnitudeY": h, "angles": angles,
               "angles2": angles2, "angles3": angles3}
-    # param = {"poles": p,"zeros":z}
-    # print(params)
     return jsonify(params)
 
 

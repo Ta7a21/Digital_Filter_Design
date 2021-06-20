@@ -13,6 +13,7 @@ var lineChart = 0;
 var lineChart2 = 0;
 var lineChart3 = 0;
 var lambda = 0;
+var z = 0;
 
 canvas.onmousedown = myDown;
 canvas.onmouseup = myUp;
@@ -320,16 +321,19 @@ function freqResponse(){
     poles_data: JSON.stringify(polesP)
   },
   function(err, req, resp){
-    var x = JSON.parse(resp["responseText"])
+    x = JSON.parse(resp["responseText"])
     // console.log(x.x)
-    var maxX = Math.max.apply(Math,x.magnitudeX);
+    // var maxX = Math.max.apply(Math,x.magnitudeX);
     if (lineChart != 0)
       lineChart.destroy();
-    for (var i = 0;i<x.magnitudeX.length;i++){
-      x.magnitudeX[i] = (x.magnitudeX[i]/maxX).toFixed(2);
-      x.magnitudeY[i] = x.magnitudeY[i].toFixed(2);
-      x.angles[i] = x.angles[i].toFixed(2);
-    }
+    // for (var i = 0;i<x.magnitudeX.length;i++){
+    //   x.magnitudeX[i] = (x.magnitudeX[i]/maxX).toFixed(2);
+    //   x.magnitudeY[i] = x.magnitudeY[i].toFixed(2);
+    //   x.angles[i] = x.angles[i].toFixed(2);
+    // }
+    // console.log(x.angles)
+    z = x.angles;
+    // console.log(z)
       
     const chart  = document.getElementById("chart")
     lineChart  = new Chart(chart,{
@@ -352,7 +356,7 @@ function freqResponse(){
             pointBorderWidth: 1,
             pointHoverRadius: 5,
             pointHitRadius: 10,
-            data: x.angles,
+            data: x.magnitudeY,
             // borderColor: Utils.CHART_COLORS.red,
             // backgroundColor: Utils.transparentize(Utils.CHART_COLORS.red, 0.5),
           },
@@ -383,13 +387,13 @@ function freqResponse(){
             pointBorderWidth: 1,
             pointHoverRadius: 5,
             pointHitRadius: 10,
-            data: x.angles2,
+            data: x.angles3,
             // borderColor: Utils.CHART_COLORS.red,
             // backgroundColor: Utils.transparentize(Utils.CHART_COLORS.red, 0.5),
           },
         ]
       }
-    })
+    })  
 
     if (lineChart3 != 0)
       lineChart3.destroy();
@@ -415,7 +419,7 @@ function freqResponse(){
             pointBorderWidth: 1,
             pointHoverRadius: 5,
             pointHitRadius: 10,
-            data: x.angles3,
+            data: x.angles2,
             // borderColor: Utils.CHART_COLORS.red,
             // backgroundColor: Utils.transparentize(Utils.CHART_COLORS.red, 0.5),
           },
@@ -427,7 +431,39 @@ function freqResponse(){
   });
 
 }
+// function h (){
+//   var zerosP = [],polesP = [];
+//   for (var i = 0;i<zeros.length;i++){
+//     var xx = zeros[i].x - 230;
+//     var yy = 210 - zeros[i].y;
+//     xx/=200.0;
+//     yy/=200.0;
+//     zerosP.push([xx,yy])
+//   }
+//   for (var i = 0;i<poles.length;i++){
+//     var xx = poles[i].x - 230;
+//     var yy = 210 - poles[i].y;
+//     xx/=200.0;
+//     yy/=200.0;
+//     polesP.push([xx,yy])
+//   }
+//   $.post( "/postmethod", {
+//     zeros_data: JSON.stringify(zerosP),
+//     poles_data: JSON.stringify(polesP)
+//   },
+//   function(err, req, resp){
+//     x = JSON.parse(resp["responseText"])
+//     // console.log(x.x)
+//     var maxX = Math.max.apply(Math,x.magnitudeX);
 
+//     for (var i = 0;i<x.magnitudeX.length;i++){
+//       x.magnitudeX[i] = (x.magnitudeX[i]/maxX).toFixed(2);
+//       x.magnitudeY[i] = x.magnitudeY[i].toFixed(2);
+//       x.angles[i] = x.angles[i].toFixed(2);
+//     }
+//   lineChart.data.datasets.pop(labe)
+// }
+//   )} 
 
 WebFontConfig = {
   google: { families: ['Open+Sans+Condensed:300:latin'] }
