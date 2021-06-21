@@ -30,11 +30,12 @@ def post_javascript_data():
     p = json.loads(jsdata2)
     lambdaa = json.loads(jsdata3)
     flag = json.loads(flag)
+
     for i in range(len(z)):
         z[i] = round(z[i][0], 2) + 1j*round(z[i][1], 2)
     for i in range(len(p)):
         p[i] = round(p[i][0], 2) + 1j*round(p[i][1], 2)
-    
+        
     w, h = signal.freqz_zpk(z, p, k)
     w = np.round(w, 2)
     angles = np.unwrap(np.angle(h))
@@ -46,7 +47,11 @@ def post_javascript_data():
         for i in phases:
             _, h2 = signal.freqz([i, 1.0], [1.0, i])
             angles2 += np.unwrap(np.angle(h2))
-            angles3 = np.add(angles, angles2)
+            if not np.all(angles):
+                angles3 = np.zeros(512)
+            else:    
+                angles3 = np.add(angles, angles2)
+                # print(type(angles3))
         if len(phases) == 0:
             angles2 = np.zeros(512)
             angles3 = angles
@@ -54,28 +59,27 @@ def post_javascript_data():
             _, h2 = signal.freqz([phases[-1], 1.0], [1.0, phases[-1]])
             angles2 = np.unwrap(np.angle(h2))
     elif flag:
-        if type(lambdaa) != float:
-            if 'j' in lambdaa :
-                lambdaa = complex(lambdaa)
+  
+        lambdaa = complex(lambdaa)
         _, h2 = signal.freqz([lambdaa, 1.0], [1.0, np.conj(lambdaa)])
         angles2 = np.unwrap(np.angle(h2))
         angles3 = np.add(angles3, angles2)
         phases.append(lambdaa)
     else:
-        if type(lambdaa) != float:
-            if 'j' in lambdaa :
-                lambdaa = complex(lambdaa)
+        lambdaa = complex(lambdaa)
         _, h2 = signal.freqz([lambdaa, 1.0], [1.0, np.conj(lambdaa)])
         angles2 = np.unwrap(np.angle(h2))
-        angles3 = np.subtract(angles3, angles2)
+        if  np.all(angles3):
+            angles3 = np.subtract(angles3, angles2)
         phases.remove(lambdaa)
         if len(phases) == 0:
             angles2 = np.zeros(512)
     angles = angles.tolist()
     angles2 = angles2.tolist()
-    angles3 = angles3.tolist()
+    angles4 = angles3.tolist()
+
     params = {"magnitudeX": w, "magnitudeY": h, "angles": angles,
-              "angles2": angles2, "angles3": angles3}
+              "angles2": angles2, "angles3": angles4}
     return jsonify(params)
 
 

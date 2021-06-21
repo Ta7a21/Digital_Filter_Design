@@ -311,9 +311,7 @@ function showCheckboxes() {
 
 function addFilter() {
   let filter = document.getElementById("text").value
-  filter = JSON.stringify(filter)
-  document.getElementById("checkBoxes").innerHTML += "<input onclick  = \"freqResponse(" + filter + ")\"  type=\"checkbox\" id=" + filter + ">" + filter + "<br>"
-
+  document.getElementById("checkBoxes").innerHTML += "<input onclick  = \"freqResponse('" + filter + "')\"  type=\"checkbox\" id=\"" + filter + "\">" + filter + "<br>"
 }
 
 function freqResponse(lambda) {
@@ -334,7 +332,7 @@ function freqResponse(lambda) {
   }
   var flag = false;
   if (lambda != 5) {
-    flag = document.getElementById(lambda).checked
+    flag = document.getElementById(lambda).checked;  
   }
   console.log(flag)
   $.post("/postmethod", {
@@ -348,11 +346,11 @@ function freqResponse(lambda) {
       x = JSON.parse(resp["responseText"])
       if (lineChart != 0)
         lineChart.destroy();
-      // for (var i = 0;i<x.magnitudeX.length;i++){
-      //   x.magnitudeX[i] = (x.magnitudeX[i]/maxX).toFixed(2);
-      //   x.magnitudeY[i] = x.magnitudeY[i].toFixed(2);
-      //   x.angles[i] = x.angles[i].toFixed(2);
-      // }
+      for (var i = 0;i<x.magnitudeX.length;i++){
+        // x.magnitudeX[i] = (x.magnitudeX[i]/maxX).toFixed(2);
+        x.magnitudeY[i] = x.magnitudeY[i].toFixed(2);
+        x.angles[i] = x.angles[i].toFixed(2);
+      }
 
       const chart = document.getElementById("chart")
       lineChart = new Chart(chart, {
