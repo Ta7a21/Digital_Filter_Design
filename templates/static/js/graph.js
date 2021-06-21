@@ -311,6 +311,7 @@ function showCheckboxes() {
 
 function addFilter() {
   let filter = document.getElementById("text").value
+  filter = JSON.stringify(filter)
   document.getElementById("checkBoxes").innerHTML += "<input onclick  = \"freqResponse(" + filter + ")\"  type=\"checkbox\" id=" + filter + ">" + filter + "<br>"
 
 }
@@ -335,6 +336,7 @@ function freqResponse(lambda) {
   if (lambda != 5) {
     flag = document.getElementById(lambda).checked
   }
+  console.log(flag)
   $.post("/postmethod", {
     zeros_data: JSON.stringify(zerosP),
     poles_data: JSON.stringify(polesP),
