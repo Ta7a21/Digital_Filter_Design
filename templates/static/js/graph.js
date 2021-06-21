@@ -14,6 +14,21 @@ var lineChart = 0;
 var lineChart2 = 0;
 var lineChart3 = 0;
 var lambda = 0;
+let apass = [];
+
+for (let i = -0.9; i <= 0.9; i += 0.1) {
+  if (i.toFixed(1) != -0.0) {
+    apass.push(i.toFixed(1));
+    document.getElementById("checkBoxes").innerHTML += "<input type=\"checkbox\" id=" + i.toFixed(1) + ">" + i.toFixed(1) + "<br>"
+  }
+  else {
+    apass.push(0);
+    document.getElementById("checkBoxes").innerHTML += "<input type=\"checkbox\" id=" + 0 + ">" + 0 + " <br> "
+  }
+}
+
+var c = document.getElementById("checkBoxes").children;
+console.log(c)
 
 
 canvas.addEventListener("contextmenu", e => e.preventDefault());
@@ -283,6 +298,22 @@ function myMove(e) {
 
   }
 }
+
+var show = true;
+
+function showCheckboxes() {
+  var checkboxes =
+    document.getElementById("checkBoxes");
+
+  if (show) {
+    checkboxes.style.display = "block";
+    show = false;
+  } else {
+    checkboxes.style.display = "none";
+    show = true;
+  }
+}
+
 function freqResponse() {
   var zerosP = [], polesP = [];
   for (var i = 0; i < zeros.length; i++) {
@@ -303,145 +334,113 @@ function freqResponse() {
     zeros_data: JSON.stringify(zerosP),
     poles_data: JSON.stringify(polesP)
   },
-  function(err, req, resp){
-    x = JSON.parse(resp["responseText"])
-    if (lineChart != 0)
-      lineChart.destroy();
-    // for (var i = 0;i<x.magnitudeX.length;i++){
-    //   x.magnitudeX[i] = (x.magnitudeX[i]/maxX).toFixed(2);
-    //   x.magnitudeY[i] = x.magnitudeY[i].toFixed(2);
-    //   x.angles[i] = x.angles[i].toFixed(2);
-    // }
-      
-    const chart  = document.getElementById("chart")
-    lineChart  = new Chart(chart,{
-      type: 'line',
-      data:  {
-        labels : x.magnitudeX,
-        datasets: [
-          {
-            label: "Magnitude Response",
-            fill: false,
-            // lineTension: 0.1,
-            backgroundColor: "rgba(75, 192, 192, 0.4)",
-            borderColor: "rgba(75, 192, 192, 1)",
-            borderCapStyle: 'butt',
-            borderDash: [],
-            borderDashOffset: 0.0,
-            borderJoinStyle: 'miter',
-            pointBorderColor: "rgba(75,192,192,1)",
-            pointBackgroundColor: "#fff",
-            pointBorderWidth: 1,
-            pointHoverRadius: 5,
-            pointHitRadius: 10,
-            data: x.magnitudeY,
-            // borderColor: Utils.CHART_COLORS.red,
-            // backgroundColor: Utils.transparentize(Utils.CHART_COLORS.red, 0.5),
-          },
-        ]
-      }
-    })
-    if (lineChart2 != 0)
-      lineChart2.destroy();
+    function (err, req, resp) {
+      x = JSON.parse(resp["responseText"])
+      if (lineChart != 0)
+        lineChart.destroy();
+      // for (var i = 0;i<x.magnitudeX.length;i++){
+      //   x.magnitudeX[i] = (x.magnitudeX[i]/maxX).toFixed(2);
+      //   x.magnitudeY[i] = x.magnitudeY[i].toFixed(2);
+      //   x.angles[i] = x.angles[i].toFixed(2);
+      // }
 
-    const chart2  = document.getElementById("chart2")
-    lineChart2  = new Chart(chart2,{
-      type: 'line',
-      data:  {
-        labels : x.magnitudeX,
-        datasets: [
-          {
-            label: "Phase response",
-            fill: false,
-            // lineTension: 0.1,
-            backgroundColor: "rgba(255,140,0,0.4)",
-            borderColor: "rgba(255,140,0,0.7)",
-            borderCapStyle: 'butt',
-            borderDash: [],
-            borderDashOffset: 0.0,
-            borderJoinStyle: 'miter',
-            pointBorderColor: "rgba(255,140,0,1)",
-            pointBackgroundColor: "#fff",
-            pointBorderWidth: 1,
-            pointHoverRadius: 5,
-            pointHitRadius: 10,
-            data: x.angles3,
-            // borderColor: Utils.CHART_COLORS.red,
-            // backgroundColor: Utils.transparentize(Utils.CHART_COLORS.red, 0.5),
-          },
-        ]
-      }
-    })  
+      const chart = document.getElementById("chart")
+      lineChart = new Chart(chart, {
+        type: 'line',
+        data: {
+          labels: x.magnitudeX,
+          datasets: [
+            {
+              label: "Magnitude Response",
+              fill: false,
+              // lineTension: 0.1,
+              backgroundColor: "rgba(75, 192, 192, 0.4)",
+              borderColor: "rgba(75, 192, 192, 1)",
+              borderCapStyle: 'butt',
+              borderDash: [],
+              borderDashOffset: 0.0,
+              borderJoinStyle: 'miter',
+              pointBorderColor: "rgba(75,192,192,1)",
+              pointBackgroundColor: "#fff",
+              pointBorderWidth: 1,
+              pointHoverRadius: 5,
+              pointHitRadius: 10,
+              data: x.magnitudeY,
+              // borderColor: Utils.CHART_COLORS.red,
+              // backgroundColor: Utils.transparentize(Utils.CHART_COLORS.red, 0.5),
+            },
+          ]
+        }
+      })
+      if (lineChart2 != 0)
+        lineChart2.destroy();
 
-    if (lineChart3 != 0)
-      lineChart3.destroy();
+      const chart2 = document.getElementById("chart2")
+      lineChart2 = new Chart(chart2, {
+        type: 'line',
+        data: {
+          labels: x.magnitudeX,
+          datasets: [
+            {
+              label: "Phase response",
+              fill: false,
+              // lineTension: 0.1,
+              backgroundColor: "rgba(255,140,0,0.4)",
+              borderColor: "rgba(255,140,0,0.7)",
+              borderCapStyle: 'butt',
+              borderDash: [],
+              borderDashOffset: 0.0,
+              borderJoinStyle: 'miter',
+              pointBorderColor: "rgba(255,140,0,1)",
+              pointBackgroundColor: "#fff",
+              pointBorderWidth: 1,
+              pointHoverRadius: 5,
+              pointHitRadius: 10,
+              data: x.angles3,
+              // borderColor: Utils.CHART_COLORS.red,
+              // backgroundColor: Utils.transparentize(Utils.CHART_COLORS.red, 0.5),
+            },
+          ]
+        }
+      })
 
-    const chart3  = document.getElementById("chart3")
-    lineChart3  = new Chart(chart3,{
-      type: 'line',
-      data:  {
-        labels : x.magnitudeX,
-        datasets: [
-          {
-            label: "All-Pass Filters phase response",
-            fill: false,
-            // lineTension: 0.1,
-            backgroundColor: "rgba(34,139,34,0.4)",
-            borderColor: "rgba(34,139,34,0.7)",
-            borderCapStyle: 'butt',
-            borderDash: [],
-            borderDashOffset: 0.0,
-            borderJoinStyle: 'bevel',
-            pointBorderColor: "rgba(34,139,34,1)",
-            pointBackgroundColor: "#fff",
-            pointBorderWidth: 1,
-            pointHoverRadius: 5,
-            pointHitRadius: 10,
-            data: x.angles2,
-            // borderColor: Utils.CHART_COLORS.red,
-            // backgroundColor: Utils.transparentize(Utils.CHART_COLORS.red, 0.5),
-          },
-        ]
-      }
-    })
-    // window.location.href = "/results/"+resp["responseJSON"]["unique_id"];  
-    // console.log(resp);
-  });
+      if (lineChart3 != 0)
+        lineChart3.destroy();
+
+      const chart3 = document.getElementById("chart3")
+      lineChart3 = new Chart(chart3, {
+        type: 'line',
+        data: {
+          labels: x.magnitudeX,
+          datasets: [
+            {
+              label: "All-Pass Filters phase response",
+              fill: false,
+              // lineTension: 0.1,
+              backgroundColor: "rgba(34,139,34,0.4)",
+              borderColor: "rgba(34,139,34,0.7)",
+              borderCapStyle: 'butt',
+              borderDash: [],
+              borderDashOffset: 0.0,
+              borderJoinStyle: 'bevel',
+              pointBorderColor: "rgba(34,139,34,1)",
+              pointBackgroundColor: "#fff",
+              pointBorderWidth: 1,
+              pointHoverRadius: 5,
+              pointHitRadius: 10,
+              data: x.angles2,
+              // borderColor: Utils.CHART_COLORS.red,
+              // backgroundColor: Utils.transparentize(Utils.CHART_COLORS.red, 0.5),
+            },
+          ]
+        }
+      })
+      // window.location.href = "/results/"+resp["responseJSON"]["unique_id"];  
+      // console.log(resp);
+    });
 
 }
-// function h (){
-//   var zerosP = [],polesP = [];
-//   for (var i = 0;i<zeros.length;i++){
-//     var xx = zeros[i].x - 230;
-//     var yy = 210 - zeros[i].y;
-//     xx/=200.0;
-//     yy/=200.0;
-//     zerosP.push([xx,yy])
-//   }
-//   for (var i = 0;i<poles.length;i++){
-//     var xx = poles[i].x - 230;
-//     var yy = 210 - poles[i].y;
-//     xx/=200.0;
-//     yy/=200.0;
-//     polesP.push([xx,yy])
-//   }
-//   $.post( "/postmethod", {
-//     zeros_data: JSON.stringify(zerosP),
-//     poles_data: JSON.stringify(polesP)
-//   },
-//   function(err, req, resp){
-//     x = JSON.parse(resp["responseText"])
-//     // console.log(x.x)
-//     var maxX = Math.max.apply(Math,x.magnitudeX);
 
-//     for (var i = 0;i<x.magnitudeX.length;i++){
-//       x.magnitudeX[i] = (x.magnitudeX[i]/maxX).toFixed(2);
-//       x.magnitudeY[i] = x.magnitudeY[i].toFixed(2);
-//       x.angles[i] = x.angles[i].toFixed(2);
-//     }
-//   lineChart.data.datasets.pop(labe)
-// }
-//   )} 
 
 WebFontConfig = {
   google: { families: ['Open+Sans+Condensed:300:latin'] }

@@ -32,10 +32,26 @@
     </div>
     <div class="column">
       <canvas id="chart" height="400" width="500"></canvas>
+      <form style="padding:50px">
+        <div class="multipleSelection">
+          <div class="selectBox" onclick="showCheckboxes()">
+            <select>
+              <option>Select options</option>
+            </select>
+            <div class="overSelect"></div>
+          </div>
+
+          <div id="checkBoxes">
+
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="column">
       <canvas id="chart2" height="400" width="500"></canvas>
+      <canvas id="chart3" height="400" width="500"></canvas>
     </div>
   </div>
-  <canvas id="chart3" height="400" width="500"></canvas>
 
   <script src="/static/js/graph.js"></script>
 </body>
