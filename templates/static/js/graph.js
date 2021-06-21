@@ -19,11 +19,11 @@ let apass = [];
 for (let i = -0.9; i <= 0.9; i += 0.1) {
   if (i.toFixed(1) != -0.0) {
     apass.push(i.toFixed(1));
-    document.getElementById("checkBoxes").innerHTML += "<input type=\"checkbox\" id=" + i.toFixed(1) + ">" + i.toFixed(1) + "<br>"
+    document.getElementById("checkBoxes").innerHTML += "<input onclick  = \"freqResponse(" + i.toFixed(1) + ")\"  type=\"checkbox\" id=" + i.toFixed(1) + ">" + i.toFixed(1) + "<br>"
   }
   else {
     apass.push(0);
-    document.getElementById("checkBoxes").innerHTML += "<input type=\"checkbox\" id=" + 0 + ">" + 0 + " <br> "
+    document.getElementById("checkBoxes").innerHTML += "<input onclick  = \"freqResponse(" + 0 + ")\" type=\"checkbox\" id=" + 0 + ">" + 0 + " <br> "
   }
 }
 
@@ -163,7 +163,7 @@ function drawCoordinates(x, y, flag) {
   }
 
   ctx.closePath();
-  freqResponse();
+  freqResponse(5);
 }
 
 var inRange = function (num, start, end) {
@@ -190,7 +190,7 @@ function clearCanvas(toClear) {
     poles = []
   }
   draw();
-  freqResponse();
+  freqResponse(5);
 }
 
 function myDown(e) {
@@ -249,7 +249,7 @@ function myUp(e) {
   }
   else {
     draw()
-    freqResponse()
+    freqResponse(5)
   }
 }
 
@@ -314,7 +314,8 @@ function showCheckboxes() {
   }
 }
 
-function freqResponse() {
+
+function freqResponse(lambda) {
   var zerosP = [], polesP = [];
   for (var i = 0; i < zeros.length; i++) {
     var xx = zeros[i].x - 230;
@@ -330,9 +331,16 @@ function freqResponse() {
     yy /= 200.0;
     polesP.push([xx, yy])
   }
+  var flag = false;
+  if (lambda != 5 ){
+    flag = document.getElementById(lambda).checked 
+  }
   $.post("/postmethod", {
     zeros_data: JSON.stringify(zerosP),
-    poles_data: JSON.stringify(polesP)
+    poles_data: JSON.stringify(polesP),
+    lambdaP : JSON.stringify(lambda),
+    flag: JSON.stringify (flag)
+
   },
     function (err, req, resp) {
       x = JSON.parse(resp["responseText"])
