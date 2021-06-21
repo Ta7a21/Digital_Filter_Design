@@ -35,7 +35,7 @@ def post_javascript_data():
         z[i] = round(z[i][0], 2) + 1j*round(z[i][1], 2)
     for i in range(len(p)):
         p[i] = round(p[i][0], 2) + 1j*round(p[i][1], 2)
-        
+
     w, h = signal.freqz_zpk(z, p, k)
     w = np.round(w, 2)
     angles = np.unwrap(np.angle(h))
@@ -44,22 +44,21 @@ def post_javascript_data():
     w = w.tolist()
     h = h.tolist()
     if lambdaa == 5:
-        for i in phases:
-            _, h2 = signal.freqz([i, 1.0], [1.0, i])
+        for phase in phases:
+            _, h2 = signal.freqz([phase, 1.0], [1.0, np.conj(phase)])
             angles2 += np.unwrap(np.angle(h2))
-            if not np.all(angles):
-                angles3 = np.zeros(512)
-            else:    
-                angles3 = np.add(angles, angles2)
+        if not np.all(angles):
+            angles3 = np.zeros(512)
+        else:    
+            angles3 = np.add(angles, angles2)
                 # print(type(angles3))
         if len(phases) == 0:
             angles2 = np.zeros(512)
             angles3 = angles
         else:
-            _, h2 = signal.freqz([phases[-1], 1.0], [1.0, phases[-1]])
+            _, h2 = signal.freqz([phases[-1], 1.0], [1.0, np.conj(phases[-1])])
             angles2 = np.unwrap(np.angle(h2))
     elif flag:
-  
         lambdaa = complex(lambdaa)
         _, h2 = signal.freqz([lambdaa, 1.0], [1.0, np.conj(lambdaa)])
         angles2 = np.unwrap(np.angle(h2))
