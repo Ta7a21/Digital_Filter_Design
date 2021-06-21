@@ -32,11 +32,14 @@
     </div>
     <div class="column">
       <canvas id="chart" height="400" width="500"></canvas>
+      <label>Custom Filter</label>
+      <input type="text" id="text">
+      <input onclick="addFilter()" type="submit" value="Add">
       <form style="padding:50px">
         <div class="multipleSelection">
           <div class="selectBox" onclick="showCheckboxes()">
             <select>
-              <option>Select options</option>
+              <option>Select filters</option>
             </select>
             <div class="overSelect"></div>
           </div>

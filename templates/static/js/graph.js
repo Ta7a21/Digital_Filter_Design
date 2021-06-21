@@ -14,21 +14,16 @@ var lineChart = 0;
 var lineChart2 = 0;
 var lineChart3 = 0;
 var lambda = 0;
-let apass = [];
 
 for (let i = -0.9; i <= 0.9; i += 0.1) {
   if (i.toFixed(1) != -0.0) {
-    apass.push(i.toFixed(1));
     document.getElementById("checkBoxes").innerHTML += "<input onclick  = \"freqResponse(" + i.toFixed(1) + ")\"  type=\"checkbox\" id=" + i.toFixed(1) + ">" + i.toFixed(1) + "<br>"
   }
   else {
-    apass.push(0);
     document.getElementById("checkBoxes").innerHTML += "<input onclick  = \"freqResponse(" + 0 + ")\" type=\"checkbox\" id=" + 0 + ">" + 0 + " <br> "
   }
 }
 
-var c = document.getElementById("checkBoxes").children;
-console.log(c)
 
 
 canvas.addEventListener("contextmenu", e => e.preventDefault());
@@ -314,6 +309,11 @@ function showCheckboxes() {
   }
 }
 
+function addFilter() {
+  let filter = document.getElementById("text").value
+  document.getElementById("checkBoxes").innerHTML += "<input onclick  = \"freqResponse(" + filter + ")\"  type=\"checkbox\" id=" + filter + ">" + filter + "<br>"
+
+}
 
 function freqResponse(lambda) {
   var zerosP = [], polesP = [];
@@ -332,14 +332,14 @@ function freqResponse(lambda) {
     polesP.push([xx, yy])
   }
   var flag = false;
-  if (lambda != 5 ){
-    flag = document.getElementById(lambda).checked 
+  if (lambda != 5) {
+    flag = document.getElementById(lambda).checked
   }
   $.post("/postmethod", {
     zeros_data: JSON.stringify(zerosP),
     poles_data: JSON.stringify(polesP),
-    lambdaP : JSON.stringify(lambda),
-    flag: JSON.stringify (flag)
+    lambdaP: JSON.stringify(lambda),
+    flag: JSON.stringify(flag)
 
   },
     function (err, req, resp) {
