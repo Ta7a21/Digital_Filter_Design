@@ -33,7 +33,7 @@ def post_javascript_data():
     flag = json.loads(flag)
 
     for i in range(len(z)):
-        z[i] = round(z[i][0], 2) + 1j * round(z[i][1], 2)
+        z[i] = round(z[i][0], 2)+ 1j * round(z[i][1], 2)
     for i in range(len(p)):
         p[i] = round(p[i][0], 2) + 1j * round(p[i][1], 2)
 
