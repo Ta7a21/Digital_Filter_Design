@@ -35,7 +35,7 @@ def post_javascript_data():
     for i in range(len(z)):
         z[i] = round(z[i][0], 2)+ 1j * round(z[i][1], 2)
     for i in range(len(p)):
-        p[i] = round(p[i][0], 2) + 1j * round(p[i][1], 2)
+        p[i] = round(p[i][0], 2)+ 1j * round(p[i][1], 2)
 
     w, h = signal.freqz_zpk(z, p, k)
     w = np.round(w, 2)
